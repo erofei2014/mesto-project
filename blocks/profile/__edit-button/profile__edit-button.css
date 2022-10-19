@@ -1,0 +1,27 @@
+.profile__edit-button {
+  box-sizing: content-box;
+  width: 10px;
+  height: 10px;
+  margin-left: 25px;
+  padding: 6px;
+  border: 1px solid #FFF;
+  cursor: pointer;
+}
+
+/*при наведении на кнопку добавления фотографий изображение становится прозрачнее на 40%*/
+.profile__edit-button:hover {
+  opacity: .6;
+  transition: 30ms;
+}
+
+@media screen and (max-width: 650px) {
+  .profile__edit-button {
+    position: absolute;
+    top: 8px;
+    right: -28px;
+    width: 7.5px;
+    height: 7.5px;
+    padding: 4.25px;
+    z-index: -1;
+  }
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Проект №3. Яндекс.Практикум, направление: Веб-разработчик+">
+  <meta name="keywords" content="Проект: Место">
+  <meta name="author" content="Андрей Ерофеев">
+  <title>Проект: Место</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body class="page">
+  <section class="popup popup_opened" aria-label="попап-элемент Редактирование профиля">
+    <div class="popup__container">
+      <img class="popup__toggle" src="./images/Close-Icon_default.svg" alt="закрыть форму">
+      <fieldset class="popup__main-container">
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <input type="text" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" required>
+        <input type="text" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" required>
+        <input type="button" class="popup__button" value="Сохранить">
+      </fieldset>
+    </div>
+  </section>
+  <header class="header">
+    <img class="logo" src="./images/Logo-Mesto_white.svg" alt="логотип Место">
+  </header>
+  <main class="content">
+    <section class="profile" aria-label="Данные профиля пользователя">
+      <div class="profile__user-info">
+        <img class="profile__avatar" src="./images/J-I-Custeau.jpg" alt="аватар пользователя">
+        <div class="profile__info">
+          <h1 class="profile__username">Жак-Ив Кусто<img class="profile__edit-button" src="./images/Pensil_default.svg" alt="кнопка редактирования профиля"></h1>
+          <p class="profile__occupation">Исследователь океана</p>
+        </div>
+      </div>
+      <img class="profile__add-button" src="./images/Add-button_default.svg" alt="кнопка добавления нового изображения">
+    </section>
+    <section class="photo-grid" aria-label="Фотографии пользователя">
+      <figure class="photo-grid__photo-card">
+        <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
+        <figcaption class="photo-grid__photo-caption">
+          <p class="photo-grid__caption-text">Карачаевск</p>
+          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
+        </figcaption>
+      </figure>
+      <figure class="photo-grid__photo-card">
+        <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
+        <figcaption class="photo-grid__photo-caption">
+          <p class="photo-grid__caption-text">Гора Эльбрус</p>
+          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
+        </figcaption>
+      </figure>
+      <figure class="photo-grid__photo-card">
+        <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
+        <figcaption class="photo-grid__photo-caption">
+          <p class="photo-grid__caption-text">Домбай</p>
+          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
+        </figcaption>
+      </figure>
+      <figure class="photo-grid__photo-card">
+        <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
+        <figcaption class="photo-grid__photo-caption">
+          <p class="photo-grid__caption-text">Гора Эльбрус</p>
+          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
+        </figcaption>
+      </figure>
+      <figure class="photo-grid__photo-card">
+        <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
+        <figcaption class="photo-grid__photo-caption">
+          <p class="photo-grid__caption-text">Домбай</p>
+          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
+        </figcaption>
+      </figure>
+      <figure class="photo-grid__photo-card">
+        <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
+        <figcaption class="photo-grid__photo-caption">
+          <p class="photo-grid__caption-text">Карачаево-Черкесская Республика</p>
+          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
+        </figcaption>
+      </figure>
+    </section>
+  </main>
+  <footer class="footer">
+    <p class="footer__copyright">© 2020 Mesto Russia</p>
+  </footer>
+</body>
+</html>

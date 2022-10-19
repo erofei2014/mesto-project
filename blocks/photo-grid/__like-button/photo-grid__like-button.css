@@ -1,0 +1,12 @@
+.photo-grid__like-button {
+  margin: 0 0 0 25px;
+  width: 22px;
+  height: 19px;
+  cursor: pointer;
+}
+
+/*при наведении на кнопку изображение становится прозрачнее на 50% с задержком 30мс*/
+.photo-grid__like-button:hover {
+  opacity: .5;
+  transition: 30ms;
+}
