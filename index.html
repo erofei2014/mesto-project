@@ -12,15 +12,17 @@
 </head>
 <body class="page">
   <section class="popup popup_opened" aria-label="попап-элемент Редактирование профиля">
-    <form class="popup__container" name="container">
-      <input type="button" class="popup__toggle" name="toggle" aria-label="Кнопка Закрыть форму">
+    <div class="popup__container">
+      <button type="button" class="popup__toggle" name="toggle" aria-label="Кнопка Закрыть форму"></button>
       <fieldset class="popup__main-container">
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <input type="text" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" required>
-        <input type="text" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" required>
-        <input type="submit" class="popup__button" value="Сохранить" aria-label="Кнопка Сохранить форму">
+        <form class="popup__user-data-form" name="user-data-form">
+          <input type="text" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" required>
+          <input type="text" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" required>
+          <button type="submit" class="popup__submit-button" name="submit-button" aria-label="Кнопка Сохранить форму">Сохранить</button>
+        </form>
       </fieldset>
-    </form>
+    </div>
   </section>
   <header class="header">
     <img class="logo" src="./images/Logo-Mesto_white.svg" alt="логотип Место">
@@ -32,54 +34,54 @@
         <div class="profile__info">
           <div class="profile__username-field">
             <h1 class="profile__username">Жак-Ив Кусто</h1>
-            <input type="button" class="profile__edit-button" name="edit-button" aria-label="Кнопка Редактировать профиль">
+            <button type="button" class="profile__edit-button" name="edit-button" aria-label="Кнопка Редактировать профиль"></button>
           </div>
           <p class="profile__occupation">Исследователь океана</p>
         </div>
       </div>
-      <input type="button" class="profile__add-button" name="add-button" aria-label="Кнопка Добавить изображение">
+      <button type="button" class="profile__add-button" name="add-button" aria-label="Кнопка Добавить изображение"></button>
     </section>
     <section class="photo-grid" aria-label="Фотографии пользователя">
       <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
         <div class="photo-grid__photo-caption">
           <h2 class="photo-grid__caption-text">Карачаевск</h2>
-          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
         </div>
       </article>
       <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
         <div class="photo-grid__photo-caption">
           <h2 class="photo-grid__caption-text">Гора Эльбрус</h2>
-          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
         </div>
       </article>
       <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
         <div class="photo-grid__photo-caption">
           <h2 class="photo-grid__caption-text">Домбай</h2>
-          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
         </div>
       </article>
       <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
         <div class="photo-grid__photo-caption">
           <h2 class="photo-grid__caption-text">Гора Эльбрус</h2>
-          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
         </div>
       </article>
       <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
         <div class="photo-grid__photo-caption">
           <h2 class="photo-grid__caption-text">Домбай</h2>
-          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
         </div>
       </article>
       <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
         <div class="photo-grid__photo-caption">
           <h2 class="photo-grid__caption-text">Карачаево-Черкесская Республика</h2>
-          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
         </div>
       </article>
     </section>

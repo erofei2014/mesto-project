@@ -4,7 +4,7 @@
   height: 19px;
   cursor: pointer;
   background-image: url('../../../images/Like_disabled.svg');
-  background-color: #FFF;
+  background-color: transparent;
   border: none;
 }
 

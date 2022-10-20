@@ -1,4 +1,4 @@
-.popup__button {
+.popup__submit-button {
   background-color: #000;
   font-size: 18px;
   font-weight: 400;
@@ -14,13 +14,13 @@
 }
 
 /*при наведении на кнопку сохранить изображение становится прозрачнее на 20%*/
-.popup__button:hover {
+.popup__submit-button:hover {
   opacity: .8;
   transition: 30ms;
 }
 
 @media screen and (max-width: 660px) {
-  .popup__button {
+  .popup__submit-button {
     font-size: 14px;
     line-height: 17px;
     height: 46px;
