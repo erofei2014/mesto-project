@@ -1,8 +1,11 @@
 .photo-grid__like-button {
-  margin: 0 0 0 25px;
+  margin: 0;
   width: 22px;
   height: 19px;
   cursor: pointer;
+  background-image: url('../../../images/Like_disabled.svg');
+  background-color: #FFF;
+  border: none;
 }
 
 /*при наведении на кнопку изображение становится прозрачнее на 50% с задержком 30мс*/

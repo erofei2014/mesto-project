@@ -3,6 +3,11 @@
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   padding: 0  0 13px;
+  margin-bottom: 48px;
+}
+
+.popup__item:first-of-type {
+  margin: 54px 0 30px;
 }
 
 .popup__item:focus {
@@ -35,4 +40,14 @@
   line-height: 17px;
   font-weight: 400;
   color: #000;
+}
+
+@media screen and (max-width: 660px) {
+  .popup__item {
+    margin-bottom: 45px;
+  }
+  
+  .popup__item:first-of-type {
+    margin-top: 75px;
+  }
 }

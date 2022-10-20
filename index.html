@@ -12,15 +12,15 @@
 </head>
 <body class="page">
   <section class="popup popup_opened" aria-label="попап-элемент Редактирование профиля">
-    <div class="popup__container">
-      <img class="popup__toggle" src="./images/Close-Icon_default.svg" alt="закрыть форму">
+    <form class="popup__container" name="container">
+      <input type="button" class="popup__toggle" name="toggle" aria-label="Кнопка Закрыть форму">
       <fieldset class="popup__main-container">
-        <h2 class="popup__heading">Редактировать профиль</h2>
+        <legend class="popup__heading">Редактировать профиль</legend>
         <input type="text" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" required>
         <input type="text" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" required>
-        <input type="button" class="popup__button" value="Сохранить">
+        <input type="submit" class="popup__button" value="Сохранить" aria-label="Кнопка Сохранить форму">
       </fieldset>
-    </div>
+    </form>
   </section>
   <header class="header">
     <img class="logo" src="./images/Logo-Mesto_white.svg" alt="логотип Место">
@@ -30,55 +30,58 @@
       <div class="profile__user-info">
         <img class="profile__avatar" src="./images/J-I-Custeau.jpg" alt="аватар пользователя">
         <div class="profile__info">
-          <h1 class="profile__username">Жак-Ив Кусто<img class="profile__edit-button" src="./images/Pensil_default.svg" alt="кнопка редактирования профиля"></h1>
+          <div class="profile__username-field">
+            <h1 class="profile__username">Жак-Ив Кусто</h1>
+            <input type="button" class="profile__edit-button" name="edit-button" aria-label="Кнопка Редактировать профиль">
+          </div>
           <p class="profile__occupation">Исследователь океана</p>
         </div>
       </div>
-      <img class="profile__add-button" src="./images/Add-button_default.svg" alt="кнопка добавления нового изображения">
+      <input type="button" class="profile__add-button" name="add-button" aria-label="Кнопка Добавить изображение">
     </section>
     <section class="photo-grid" aria-label="Фотографии пользователя">
-      <figure class="photo-grid__photo-card">
+      <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
-        <figcaption class="photo-grid__photo-caption">
-          <p class="photo-grid__caption-text">Карачаевск</p>
-          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
-        </figcaption>
-      </figure>
-      <figure class="photo-grid__photo-card">
+        <div class="photo-grid__photo-caption">
+          <h2 class="photo-grid__caption-text">Карачаевск</h2>
+          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+        </div>
+      </article>
+      <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
-        <figcaption class="photo-grid__photo-caption">
-          <p class="photo-grid__caption-text">Гора Эльбрус</p>
-          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
-        </figcaption>
-      </figure>
-      <figure class="photo-grid__photo-card">
+        <div class="photo-grid__photo-caption">
+          <h2 class="photo-grid__caption-text">Гора Эльбрус</h2>
+          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+        </div>
+      </article>
+      <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
-        <figcaption class="photo-grid__photo-caption">
-          <p class="photo-grid__caption-text">Домбай</p>
-          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
-        </figcaption>
-      </figure>
-      <figure class="photo-grid__photo-card">
+        <div class="photo-grid__photo-caption">
+          <h2 class="photo-grid__caption-text">Домбай</h2>
+          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+        </div>
+      </article>
+      <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
-        <figcaption class="photo-grid__photo-caption">
-          <p class="photo-grid__caption-text">Гора Эльбрус</p>
-          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
-        </figcaption>
-      </figure>
-      <figure class="photo-grid__photo-card">
+        <div class="photo-grid__photo-caption">
+          <h2 class="photo-grid__caption-text">Гора Эльбрус</h2>
+          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+        </div>
+      </article>
+      <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
-        <figcaption class="photo-grid__photo-caption">
-          <p class="photo-grid__caption-text">Домбай</p>
-          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
-        </figcaption>
-      </figure>
-      <figure class="photo-grid__photo-card">
+        <div class="photo-grid__photo-caption">
+          <h2 class="photo-grid__caption-text">Домбай</h2>
+          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+        </div>
+      </article>
+      <article class="photo-grid__photo-card">
         <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
-        <figcaption class="photo-grid__photo-caption">
-          <p class="photo-grid__caption-text">Карачаево-Черкесская Республика</p>
-          <img class="photo-grid__like-button" src="./images/Like_disabled.svg" alt="Кнопка Нравится">
-        </figcaption>
-      </figure>
+        <div class="photo-grid__photo-caption">
+          <h2 class="photo-grid__caption-text">Карачаево-Черкесская Республика</h2>
+          <input type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится">
+        </div>
+      </article>
     </section>
   </main>
   <footer class="footer">
