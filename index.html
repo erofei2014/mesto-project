@@ -11,15 +11,28 @@
   <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
-  <section class="popup popup_opened" aria-label="попап-элемент Редактирование профиля">
+  <section class="popup popup__user-data-form" aria-label="попап-элемент Редактирование профиля">
     <div class="popup__container">
-      <button type="button" class="popup__toggle" name="toggle" aria-label="Кнопка Закрыть форму"></button>
+      <button type="button" class="popup__toggle" name="toggle-user-data-form" aria-label="Кнопка Закрыть форму"></button>
       <fieldset class="popup__main-container">
         <h2 class="popup__heading">Редактировать профиль</h2>
         <form class="popup__user-data-form" name="user-data-form">
-          <input type="text" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" required>
-          <input type="text" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" required>
-          <button type="submit" class="popup__submit-button" name="submit-button" aria-label="Кнопка Сохранить форму">Сохранить</button>
+          <input type="text" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" value="Жак-Ив Кусто" required>
+          <input type="text" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" value="Исследователь океана" required>
+          <button type="submit" class="popup__submit-button popup__submit-button-user-data" name="submit-button-user-data" aria-label="Кнопка Сохранить форму">Сохранить</button>
+        </form>
+      </fieldset>
+    </div>
+  </section>
+  <section class="popup popup__add-picture-form" aria-label="попап-элемент Добавление картинки">
+    <div class="popup__container">
+      <button type="button" class="popup__toggle" name="toggle-add-picture-form" aria-label="Кнопка Закрыть форму"></button>
+      <fieldset class="popup__main-container">
+        <h2 class="popup__heading">Новое место</h2>
+        <form class="popup__add-picture-form" name="add-picture-form">
+          <input type="text" class="popup__item popup__item_input_picture-title" name="picture-title" placeholder="Название картинки" required>
+          <input type="text" class="popup__item popup__item_input_picture-link" name="picture-link" placeholder="Ссылка на картинку" required>
+          <button type="submit" class="popup__submit-button popup__submit-button-add-picture" name="submit-button" aria-label="Кнопка Сохранить форму">Создать</button>
         </form>
       </fieldset>
     </div>
@@ -42,52 +55,28 @@
       <button type="button" class="profile__add-button" name="add-button" aria-label="Кнопка Добавить изображение"></button>
     </section>
     <section class="photo-grid" aria-label="Фотографии пользователя">
-      <article class="photo-grid__photo-card">
-        <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
-        <div class="photo-grid__photo-caption">
-          <h2 class="photo-grid__caption-text">Карачаевск</h2>
-          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
-        </div>
-      </article>
-      <article class="photo-grid__photo-card">
-        <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
-        <div class="photo-grid__photo-caption">
-          <h2 class="photo-grid__caption-text">Гора Эльбрус</h2>
-          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
-        </div>
-      </article>
-      <article class="photo-grid__photo-card">
-        <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
-        <div class="photo-grid__photo-caption">
-          <h2 class="photo-grid__caption-text">Домбай</h2>
-          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
-        </div>
-      </article>
-      <article class="photo-grid__photo-card">
-        <img class="photo-grid__photo" src="./images/pictures-elbrus.jpg" alt="вид на Эльбрус на закате">
-        <div class="photo-grid__photo-caption">
-          <h2 class="photo-grid__caption-text">Гора Эльбрус</h2>
-          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
-        </div>
-      </article>
-      <article class="photo-grid__photo-card">
-        <img class="photo-grid__photo" src="./images/pictures-dombai.jpg" alt="заснеженная горная вершина Домбая">
-        <div class="photo-grid__photo-caption">
-          <h2 class="photo-grid__caption-text">Домбай</h2>
-          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
-        </div>
-      </article>
-      <article class="photo-grid__photo-card">
-        <img class="photo-grid__photo" src="./images/pictures-karachaevsk.jpg" alt="Карачаевск, горный православный храм">
-        <div class="photo-grid__photo-caption">
-          <h2 class="photo-grid__caption-text">Карачаево-Черкесская Республика</h2>
-          <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
-        </div>
-      </article>
     </section>
   </main>
   <footer class="footer">
     <p class="footer__copyright">© 2020 Mesto Russia</p>
   </footer>
+  <template id="photo-card-template">
+    <article class="photo-grid__photo-card">
+      <div class="photo-grid__popup">
+        <div class="photo-grid__popup-container">
+          <button type="button" class="photo-grid__popup-toggle" name="toggle-picture" aria-label="Кнопка Закрыть изображение"></button>
+          <img class="photo-grid__big-photo">
+          <h3 class="photo-grid__big-photo-caption"></h3>
+        </div>
+      </div>
+      <img class="photo-grid__photo">
+      <div class="photo-grid__photo-caption">
+        <h2 class="photo-grid__caption-text"></h2>
+        <button type="button" class="photo-grid__like-button" name="like-button" aria-label="Кнопка Нравится"></button>
+      </div>
+      <button type="button" class="photo-grid__delete-button" name="delete-button" aria-label="Кнопка Удалить картинку"></button>
+    </article>
+  </template>
+  <script src="./pages/script.js"></script>
 </body>
 </html>

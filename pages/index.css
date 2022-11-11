@@ -31,11 +31,18 @@
 
 @import url('../blocks/photo-grid/photo-grid.css');
 @import url('../blocks/photo-grid/__photo-card/photo-grid__photo-card.css');
+@import url('../blocks/photo-grid/__delete-button/photo-grid__delete-button.css');
 @import url('../blocks/photo-grid/__photo/photo-grid__photo.css');
 @import url('../blocks/photo-grid/__photo-caption/photo-grid__photo-caption.css');
 @import url('../blocks/photo-grid/__caption-text/photo-grid__caption-text.css');
 @import url('../blocks/photo-grid/__like-button/photo-grid__like-button.css');
 @import url('../blocks/photo-grid/__like-button/_active/photo-grid__like-button_active.css');
+@import url('../blocks/photo-grid/__popup/photo-grid__popup.css');
+@import url('../blocks/photo-grid/__popup/_opened/photo-grid__popup_opened.css');
+@import url('../blocks/photo-grid/__popup-container/photo-grid__popup-container.css');
+@import url('../blocks/photo-grid/__popup-toggle/photo-grid__popup-toggle.css');
+@import url('../blocks/photo-grid/__big-photo/photo-grid__big-photo.css');
+@import url('../blocks/photo-grid/__big-photo-caption/photo-grid__big-photo-caption.css');
 
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__copyright/footer__copyright.css');

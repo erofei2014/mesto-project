@@ -18,28 +18,28 @@
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
-  color: #000;
+  color: #C4C4C4;
 }
 
 .popup__item::-webkit-input-placeholder {
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
-  color: #000;
+  color: #C4C4C4;
 }
 
 .popup__item::-moz-placeholder {
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
-  color: #000;
+  color: #C4C4C4;
 }
 
 .popup__item::-ms-input-placeholder {
   font-size: 14px;
   line-height: 17px;
   font-weight: 400;
-  color: #000;
+  color: #C4C4C4;
 }
 
 @media screen and (max-width: 660px) {
