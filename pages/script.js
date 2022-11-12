@@ -109,6 +109,8 @@ function closePopup(popup) {
 
 //добавляем event открытия модального окна к кнопке редактирования данных пользователя
 profileEditButton.addEventListener('click', function() {
+  usernameInput.value = profileUsername.textContent;
+  userOccupationInput.value = profileOccupation.textContent;
   openPopup(popupUserDataForm);
 });
 
