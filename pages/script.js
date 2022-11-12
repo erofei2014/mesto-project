@@ -12,11 +12,20 @@ const pictureTitle = popupUserAddPictureForm.querySelector('.popup__item_input_p
 const pictureLink = popupUserAddPictureForm.querySelector('.popup__item_input_picture-link');
 const savePictureButton = popupUserAddPictureForm.querySelector('.popup__submit-button-add-picture');
 
+const popupPictureForm = page.querySelector('.popup__picture-form');
+const popupPictureImage = popupPictureForm.querySelector('.popup__picture-element');
+const popupPictureCaption = popupPictureForm.querySelector('.popup__picture-caption');
+
 const popupToggles = page.querySelectorAll('.popup__toggle');
 
 const profileInfo = content.querySelector('.profile__info');
+const profileUsername = profileInfo.querySelector('.profile__username');
+const profileOccupation = profileInfo.querySelector('.profile__occupation');
 const profileEditButton = content.querySelector('.profile__edit-button');
 const addPictureButton = content.querySelector('.profile__add-button');
+
+const pictureTemplate = page.querySelector('#photo-card-template').content;
+
 
 const likeButtons = content.querySelectorAll('.photo-grid__like-button');
 const photoGrid = content.querySelector('.photo-grid');
@@ -28,7 +37,7 @@ const initialCards = [
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
   },
-{
+  {
     name: 'Челябинская область',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
   },
@@ -48,14 +57,44 @@ const initialCards = [
     name: 'Байкал',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
-  ];
+];
+
+//функция добавления блока в DOM для новой фотографии и подключения к ней необходимых event
+function createPicture(pictureTitle, pictureLink) {
+  const pictureElement = pictureTemplate.querySelector('.photo-grid__photo-card').cloneNode(true);
+  //подключаем фотографию по ссылке и название фотографии из формы
+  pictureElement.querySelector('.photo-grid__photo').setAttribute('src', pictureLink);
+  pictureElement.querySelector('.photo-grid__photo').setAttribute('alt', pictureTitle);
+  pictureElement.querySelector('.photo-grid__caption-text').textContent = pictureTitle;
+  //настройка работы кнопки лайка фотографии
+  pictureElement.querySelector('.photo-grid__like-button').addEventListener('click', (evt) => evt.target.classList.toggle('photo-grid__like-button_active'));
+  //настройка работы корзины для удаления фотографии
+  pictureElement.querySelector('.photo-grid__delete-button').addEventListener('click', (evt) => evt.target.closest('.photo-grid__photo-card').remove());
+  //добавляем event по клику на фотокарточку, открывающий модальное окно с фотографией
+  pictureElement.querySelector('.photo-grid__photo').addEventListener('click', function(evt) {
+    popupPictureImage.setAttribute('src', evt.target.getAttribute('src'));
+    popupPictureImage.setAttribute('alt', evt.target.getAttribute('alt'));
+    popupPictureCaption.textContent = evt.target.getAttribute('alt');
+    openPopup(popupPictureForm);
+  });
+  //возвращаем готовую карточку
+  return pictureElement;
+}
+
+// функция по добавлению карточки в начало Грида
+function addPictureToTop(pictureTitle, pictureLink) {
+  //вызываем функцию создания фотокарточки
+  const pictureElement = createPicture(pictureTitle, pictureLink);
+  //добавляем фото в начало грид-блока
+  photoGrid.prepend(pictureElement);
+}
 
 //Добавляем изображения из массива на страничку сайта
 initialCards.forEach(function(element) {
-  let items = Object.keys(element);
-  let name = element[items[0]];
-  let link = element[items[1]];
-  addPicture(name, link);
+  const items = Object.keys(element);
+  const name = element[items[0]];
+  const link = element[items[1]];
+  addPictureToTop(name, link);
 });
 
 //Функция открытия модального окна
@@ -78,60 +117,31 @@ addPictureButton.addEventListener('click', function() {
   openPopup(popupUserAddPictureForm);
 });
 
-//Прописываем event по клику на крестик - закрытие модального окна
+//добавляем event закрытия модального окна для крестиков
 popupToggles.forEach(function(element) {
-  element.addEventListener('click', (evt) => evt.target.closest('.popup').classList.remove('popup_opened'));
+  element.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup')));
 });
 
 //Форма отправки на сервер формы по изменению персональных данных пользователя
-function formSubmitHandler (evt) {
+function handleProfileFormSubmit (evt) {
   evt.preventDefault();
-  let newName = usernameInput.value;
-  let newOccupation = userOccupationInput.value;
-  profileInfo.querySelector('.profile__username').textContent = newName;
-  profileInfo.querySelector('.profile__occupation').textContent = newOccupation;
+  const newName = usernameInput.value;
+  const newOccupation = userOccupationInput.value;
+  profileUsername.textContent = newName;
+  profileOccupation.textContent = newOccupation;
   closePopup(popupUserDataForm);
 }
 
 //event по клику на кнопку сохранения формы, вызывающий соответствующую функцию
-popupUserDataForm.addEventListener('submit', formSubmitHandler);
+popupUserDataForm.addEventListener('submit', handleProfileFormSubmit);
 
 //Форма отправки на сервер добавленной фотографии
-function formAddPictureHandler (evt) {
+function handlePictureAddingFormSubmit (evt) {
   evt.preventDefault();
-  addPicture(pictureTitle.value, pictureLink.value);
+  addPictureToTop(pictureTitle.value, pictureLink.value);
   closePopup(popupUserAddPictureForm);
-  pictureTitle.value = "";
-  pictureLink.value = "";
+  evt.target.reset();
 }
 
 //event по клику на кнопку добавления фотографии, вызывающий соответствующую функцию
-popupUserAddPictureForm.addEventListener('submit', formAddPictureHandler);
-
-//функция добавления блока в DOM для новой фотографии и модального окна с большой фотографией
-function addPicture(pictureTitle, pictureLink) {
-  const pictureTemplate = page.querySelector('#photo-card-template').content;
-  const pictureElement = pictureTemplate.querySelector('.photo-grid__photo-card').cloneNode(true);
-
-  //подключаем фотографию по ссылке и название фотографии из формы
-  pictureElement.querySelector('.photo-grid__photo').setAttribute('src', pictureLink);
-  pictureElement.querySelector('.photo-grid__photo').setAttribute('alt', pictureTitle);
-  pictureElement.querySelector('.photo-grid__caption-text').textContent = pictureTitle;
-  //настройка функции открытия модального окна с большой фотографией по клику на фото
-  pictureElement.querySelector('.photo-grid__photo').addEventListener('click', (evt) => evt.target.previousElementSibling.classList.add('photo-grid__popup_opened'));
-  //настройка закрытия модального окна по клику на крестик
-  pictureElement.querySelector('.photo-grid__popup-toggle').addEventListener('click', (evt) => evt.target.closest('.photo-grid__popup').classList.remove('photo-grid__popup_opened'));
-  //подключаем фотографию по ссылке и название фотографии из формы
-  pictureElement.querySelector('.photo-grid__big-photo').setAttribute('src', pictureLink);
-  pictureElement.querySelector('.photo-grid__big-photo').setAttribute('alt', pictureTitle);
-  pictureElement.querySelector('.photo-grid__big-photo-caption').textContent = pictureTitle;
-  //настройка работы кнопки лайка фотографии
-  pictureElement.querySelector('.photo-grid__like-button').addEventListener('click', (evt) => evt.target.classList.toggle('photo-grid__like-button_active'));
-  //настройка работы корзины для удаления фотографии
-  pictureElement.querySelector('.photo-grid__delete-button').addEventListener('click', (evt) => evt.target.closest('.photo-grid__photo-card').remove());
-  //добавляем фото в начало грид-блока
-  photoGrid.prepend(pictureElement);
-}
-
-
-
+popupUserAddPictureForm.addEventListener('submit', handlePictureAddingFormSubmit);

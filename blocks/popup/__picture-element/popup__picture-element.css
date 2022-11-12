@@ -1,4 +1,4 @@
-.photo-grid__big-photo {
+.popup__picture-element {
   max-width: 75vw;
   max-height: 75vh;
   object-fit: cover;
