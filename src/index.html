@@ -14,27 +14,35 @@
   <section class="popup popup__user-data-form" aria-label="попап-элемент Редактирование профиля">
     <div class="popup__container">
       <button type="button" class="popup__toggle" name="toggle-user-data-form" aria-label="Кнопка Закрыть форму"></button>
-      <fieldset class="popup__main-container">
+      <div class="popup__main-container">
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="popup__user-data-form" name="user-data-form">
-          <input type="text" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" required>
-          <input type="text" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" required>
-          <button type="submit" class="popup__submit-button popup__submit-button-user-data" name="submit-button-user-data" aria-label="Кнопка Сохранить форму">Сохранить</button>
+        <form class="popup__form popup__user-data-form" name="user-data-form" novalidate>
+          <fieldset class="popup__fieldset">
+            <input type="text" id="username-input" class="popup__item popup__item_input_username" name="username" placeholder="Жак-Ив Кусто" required minlength="2" maxlength="40" pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+            <span class="popup__input-error username-input-error"></span>
+            <input type="text" id="occupation-input" class="popup__item popup__item_input_occupation" name="occupation" placeholder="Исследователь океана" required minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+            <span class="popup__input-error occupation-input-error"></span>
+            <button type="submit" class="popup__submit-button popup__submit-button-user-data" name="submit-button-user-data" aria-label="Кнопка Сохранить форму">Сохранить</button>
+          </fieldset>
         </form>
-      </fieldset>
+      </div>
     </div>
   </section>
   <section class="popup popup__add-picture-form" aria-label="попап-элемент Добавление картинки">
     <div class="popup__container">
       <button type="button" class="popup__toggle" name="toggle-add-picture-form" aria-label="Кнопка Закрыть форму"></button>
-      <fieldset class="popup__main-container">
+      <div class="popup__main-container">
         <h2 class="popup__heading">Новое место</h2>
-        <form class="popup__add-picture-form" name="add-picture-form">
-          <input type="text" class="popup__item popup__item_input_picture-title" name="picture-title" placeholder="Название картинки" required>
-          <input type="text" class="popup__item popup__item_input_picture-link" name="picture-link" placeholder="Ссылка на картинку" required>
-          <button type="submit" class="popup__submit-button popup__submit-button-add-picture" name="submit-button" aria-label="Кнопка Сохранить форму">Создать</button>
+        <form class="popup__form popup__add-picture-form" name="add-picture-form" novalidate>
+          <fieldset class="popup__fieldset">
+            <input type="text" id="picture-title-input" class="popup__item popup__item_input_picture-title" name="picture-title" placeholder="Название" required minlength="2" maxlength="30" pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
+            <span class="popup__input-error picture-title-input-error"></span>
+            <input type="url" id="picture-link-input" class="popup__item popup__item_input_picture-link" name="picture-link" placeholder="Ссылка на картинку" required>
+            <span class="popup__input-error picture-link-input-error"></span>
+            <button type="submit" class="popup__submit-button popup__submit-button-add-picture" name="submit-button" aria-label="Кнопка Сохранить форму">Создать</button>
+          </fieldset>
         </form>
-      </fieldset>
+      </div>
     </div>
   </section>
   <section class="popup popup__picture-form">
@@ -77,6 +85,10 @@
       <button type="button" class="photo-grid__delete-button" name="delete-button" aria-label="Кнопка Удалить картинку"></button>
     </article>
   </template>
-  <script src="./pages/script.js"></script>
+  <script type="module" src="./components/index.js"></script>
+  <script type="module" src="./components/card.js"></script>
+  <script type="module" src="./components/modal.js"></script>
+  <script type="module" src="./components/utils.js"></script>
+  <script type="module" src="./components/validate.js"></script>
 </body>
 </html>
