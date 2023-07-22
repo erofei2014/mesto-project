@@ -22,6 +22,7 @@ export {
 };
 
 //импортируем необходимые функции и переменные
+import '../pages/index.css';
 import { enableValidation } from './validate.js';
 import { addPictureToTop } from './card.js';
 import { openPopup, closePopup } from './modal.js';

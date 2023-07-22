@@ -8,7 +8,6 @@
   <meta name="keywords" content="Проект: Место">
   <meta name="author" content="Андрей Ерофеев">
   <title>Проект: Место</title>
-  <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
   <section class="popup popup__user-data-form" aria-label="попап-элемент Редактирование профиля">
@@ -53,12 +52,12 @@
     </div>
   </section>
   <header class="header">
-    <img class="logo" src="./images/Logo-Mesto_white.svg" alt="логотип Место">
+    <img class="logo" src="<%=require('./images/Logo-Mesto_white.svg')%>" alt="логотип Место">
   </header>
   <main class="content">
     <section class="profile" aria-label="Данные профиля пользователя">
       <div class="profile__user-info">
-        <img class="profile__avatar" src="./images/J-I-Custeau.jpg" alt="аватар пользователя">
+        <img class="profile__avatar" src="<%=require('./images/J-I-Custeau.jpg')%>" alt="аватар пользователя">
         <div class="profile__info">
           <div class="profile__username-field">
             <h1 class="profile__username">Жак-Ив Кусто</h1>
@@ -85,10 +84,5 @@
       <button type="button" class="photo-grid__delete-button" name="delete-button" aria-label="Кнопка Удалить картинку"></button>
     </article>
   </template>
-  <script type="module" src="./components/index.js"></script>
-  <script type="module" src="./components/card.js"></script>
-  <script type="module" src="./components/modal.js"></script>
-  <script type="module" src="./components/utils.js"></script>
-  <script type="module" src="./components/validate.js"></script>
 </body>
 </html>
