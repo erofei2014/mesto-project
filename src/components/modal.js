@@ -1,9 +1,7 @@
 //блок функций по работе модальных окон
 
 //импортируем необходимые функции и переменные
-import { fillInputField } from './utils.js';
-import { hideInputError, toggleButtonState } from './validate.js';
-import { page, popups, usernameInput, userOccupationInput, profileUsername, profileOccupation } from './index.js';
+import { page, popups } from './index.js';
 
 //экспортируем необходимые функции и переменные
 export { openPopup, closePopup };
@@ -13,18 +11,6 @@ function openPopup(popup) {
   popup.classList.add('popup_opened');
   page.addEventListener('keydown', checkIfEsc);
   popup.addEventListener('click', checkIfClickOnOverlay);
-  fillInputField(usernameInput, userOccupationInput, profileUsername, profileOccupation);
-  const inputList = Array.from(popup.querySelectorAll('.popup__item'));
-  inputList.forEach(inputElement => {
-    inputElement.setCustomValidity("");
-    hideInputError(popup.querySelector('.popup__form'), inputElement, {
-      inputErrorClass: 'popup__item_type_error',
-      errorClass: 'popup__input-error_active'
-    });
-  });
- toggleButtonState(inputList, popup.querySelector('.popup__submit-button'), {
-    inactiveButtonClass: 'popup__submit-button_inactive'
-  });
 }
 
 //Функция закрытия модального окна

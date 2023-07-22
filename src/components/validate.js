@@ -1,7 +1,7 @@
 //блок функций по валидации форм
 
 //экспортируем необходимые функции и переменные
-export { enableValidation, toggleButtonState, hideInputError };
+export { enableValidation, reloadValidation };
 
 //функция, которая показывает текст ошибки и подсвечивает поле с ошибкой
 const showInputError = (formElement, inputElement, errorMessage, formSelectors) => {
@@ -67,6 +67,17 @@ const hasInvalidInput = inputList => {
     return !inputElement.validity.valid;
   });
 };
+
+//функция сброса ошибок валидации и проверка активности кнопки (используется при открытии попапа с данными пользователя и с загрузкой фото)
+const reloadValidation = (formElement, formSelectors) => {
+  const inputList = Array.from(formElement.querySelectorAll(formSelectors.inputSelector));
+  inputList.forEach(inputElement => {
+    inputElement.setCustomValidity("");
+    hideInputError(formElement, inputElement, formSelectors);
+  });
+  const buttonElement = formElement.querySelector(formSelectors.submitButtonSelector);
+  toggleButtonState(inputList, buttonElement, formSelectors);
+}
 
 //функция управления состоянием кнопки сабмита формы
 const toggleButtonState = (inputList, buttonElement, formSelectors) => {

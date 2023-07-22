@@ -23,7 +23,7 @@ export {
 
 //импортируем необходимые функции и переменные
 import '../pages/index.css';
-import { enableValidation } from './validate.js';
+import { enableValidation, reloadValidation } from './validate.js';
 import { addPictureToTop } from './card.js';
 import { openPopup, closePopup } from './modal.js';
 import { handleProfileFormSubmit, handlePictureAddingFormSubmit, fillInputField } from './utils.js';
@@ -90,17 +90,35 @@ initialCards.forEach(function(element) {
   addPictureToTop(name, link);
 });
 
-//добавляем event открытия модального окна к кнопке редактирования данных пользователя
+//добавляем event открытия модального окна к кнопке редактирования данных пользователя и сброс проверки валидации
 profileEditButton.addEventListener('click', function() {
-  fillInputField(usernameInput, userOccupationInput, profileUsername, profileOccupation);
   openPopup(popupUserDataForm);
+  fillInputField(usernameInput, userOccupationInput, profileUsername, profileOccupation);
+  reloadValidation(popupUserDataForm, {
+    formSelector: '.popup__form',
+    fieldsetSelector: '.popup__fieldset',
+    inputSelector: '.popup__item',
+    submitButtonSelector: '.popup__submit-button',
+    inactiveButtonClass: 'popup__submit-button_inactive',
+    inputErrorClass: 'popup__item_type_error',
+    errorClass: 'popup__input-error_active'
+  });
 });
 
-//добавляем event открытия модального окна к кнопке добавления новой фотографии
+//добавляем event открытия модального окна к кнопке добавления новой фотографии и сброс проверки валидации
 addPictureButton.addEventListener('click', function() {
   pictureTitle.value = "";
   pictureLink.value = "";
   openPopup(popupUserAddPictureForm);
+  reloadValidation(popupUserAddPictureForm, {
+    formSelector: '.popup__form',
+    fieldsetSelector: '.popup__fieldset',
+    inputSelector: '.popup__item',
+    submitButtonSelector: '.popup__submit-button',
+    inactiveButtonClass: 'popup__submit-button_inactive',
+    inputErrorClass: 'popup__item_type_error',
+    errorClass: 'popup__input-error_active'
+  });
 });
 
 //добавляем event закрытия модального окна по кнопке крестик
