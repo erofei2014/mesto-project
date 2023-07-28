@@ -40,10 +40,13 @@
 @import url('../blocks/photo-grid/photo-grid.css');
 @import url('../blocks/photo-grid/__photo-card/photo-grid__photo-card.css');
 @import url('../blocks/photo-grid/__delete-button/photo-grid__delete-button.css');
+@import url('../blocks/photo-grid/__delete-button/_active/photo-grid__delete-button_active.css');
 @import url('../blocks/photo-grid/__photo/photo-grid__photo.css');
 @import url('../blocks/photo-grid/__photo-caption/photo-grid__photo-caption.css');
 @import url('../blocks/photo-grid/__caption-text/photo-grid__caption-text.css');
+@import url('../blocks/photo-grid/__like-field/photo-grid__like-field.css');
 @import url('../blocks/photo-grid/__like-button/photo-grid__like-button.css');
+@import url('../blocks/photo-grid/__likes-count/photo-grid__likes-count.css');
 @import url('../blocks/photo-grid/__like-button/_active/photo-grid__like-button_active.css');
 
 @import url('../blocks/footer/footer.css');

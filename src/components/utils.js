@@ -1,24 +1,28 @@
 //блок утилитарных функций
 
 //импортируем необходимые функции и переменные
-import { addPictureToTop } from './card.js';
+import { patchProfileData, patchAvatar, postNewCard } from './api.js';
 import { closePopup } from './modal.js';
 import {
   popupUserDataForm,
+  popupUserAvatarForm,
   usernameInput,
   userOccupationInput,
   profileUsername,
   profileOccupation,
   popupUserAddPictureForm,
-  pictureTitle,
-  pictureLink
+  avatarEditButton
 } from './index.js';
 
 //экспортируем необходимые функции и переменные
 export { 
   handleProfileFormSubmit,
   handlePictureAddingFormSubmit,
-  fillInputField
+  handleAvatarFormSubmit,
+  fillInputField,
+  renderLoading,
+  updateUserData,
+  updateUserAvatar
 };
 
 //добавляем в инпуты значения данных пользователя
@@ -35,13 +39,41 @@ function handleProfileFormSubmit (evt) {
   profileUsername.textContent = newName;
   profileOccupation.textContent = newOccupation;
   fillInputField(usernameInput, userOccupationInput, profileUsername, profileOccupation);
+  patchProfileData();
   closePopup(popupUserDataForm);
 }
 
 //Форма отправки на сервер добавленной фотографии
 function handlePictureAddingFormSubmit (evt) {
   evt.preventDefault();
-  addPictureToTop(pictureTitle.value, pictureLink.value);
+  postNewCard();
   closePopup(popupUserAddPictureForm);
   evt.target.reset();
+}
+
+//Форма отправки на сервер ссылки на картинку с новым аватаром
+function handleAvatarFormSubmit (evt) {
+  evt.preventDefault();
+  patchAvatar();
+  closePopup(popupUserAvatarForm);
+}
+
+//Функция по замене текста кнопки, пока идёт процесс сохранения данных на сервере
+function renderLoading(isLoading) {
+  if(isLoading) {
+    document.querySelector('.popup__submit-button-user-data').textContent = 'Сохранение...';
+  } else {
+    document.querySelector('.popup__submit-button-user-data').textContent = 'Сохранить';
+  }
+}
+
+//функция обновить данные пользователя
+function updateUserData(name, about) {
+  profileUsername.textContent = name;
+  profileOccupation.textContent = about;
+}
+
+//функция обновить аватар
+function updateUserAvatar(avatar) {
+  avatarEditButton.style.background = `center / cover no-repeat url('${avatar}')`; 
 }
