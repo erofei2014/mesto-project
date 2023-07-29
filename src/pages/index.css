@@ -10,7 +10,6 @@
 @import url('../blocks/popup/__toggle/popup__toggle.css');
 @import url('../blocks/popup/__main-container/popup__main-container.css');
 @import url('../blocks/popup/__form/popup__form.css');
-@import url('../blocks/popup/__fieldset/popup__fieldset.css');
 @import url('../blocks/popup/__heading/popup__heading.css');
 @import url('../blocks/popup/__item/popup__item.css');
 @import url('../blocks/popup/__item/_type/popup__item_type_error.css');

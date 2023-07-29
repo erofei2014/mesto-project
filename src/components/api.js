@@ -1,16 +1,5 @@
 //скрипты запросов к серверу
 
-//импортируем необходимые функции и переменные
-import { renderLoading, updateUserData, updateUserAvatar } from "./utils.js";
-import { addPictureToTop, addPictureToBottom, showLikes } from "./card.js";
-import {
-  usernameInput,
-  userOccupationInput,
-  userAvatarLinkInput,
-  pictureTitle,
-  pictureLink
-} from "./index.js";
-
 //сохраняем в константу адрес и заголовок запроса
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-27',
@@ -20,26 +9,25 @@ const config = {
   }
 }
 
-//сохраняем в константу свой номер id для сверки авторства карточек
-const myId = 'ebe4e15c5c59c55cbdd9d2ab';
+//сохраняем в функцию стандартное правило при получении ответа от сервера
+function getResponseData(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
+}
 
 //запрос к серверу на получение данных профиля и аватарки
 export const getInitialUserData = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
+  .then(res => getResponseData(res))
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then(res => {
-    updateUserData(res.name, res.about);
-    updateUserAvatar(res.avatar);
+    return res;
   })
   .catch((err) => {
-    console.log(err);
+    return err;
   });
 };
 
@@ -48,25 +36,17 @@ export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
+  .then(res => getResponseData(res))
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then(res => {
-    res.forEach(element => {
-      addPictureToBottom(element.name, element.link, element.owner._id, myId, element._id, element.likes);
-    });
+    return res;
   })
   .catch((err) => {
-    console.log(err);
+    return err;
   });
 };
 
 //запрос к серверу на обновление данных профиля
-export const patchProfileData = () => {
-  renderLoading(true);
+export const patchProfileData = (usernameInput, userOccupationInput) => {
   return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
     headers: config.headers,
@@ -75,26 +55,17 @@ export const patchProfileData = () => {
       about: userOccupationInput.value
     })
   })
+  .then(res => getResponseData(res))
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then(res => {
-    updateUserData(res.name, res.about);
+    return res;
   })
   .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    renderLoading(false);
+    return err;
   });
 };
 
 //запрос к серверу на обновление аватарки
-export const patchAvatar = () => {
-  renderLoading(true);
+export const patchAvatar = (userAvatarLinkInput) => {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: config.headers,
@@ -102,26 +73,17 @@ export const patchAvatar = () => {
       avatar: userAvatarLinkInput.value
     })
   })
+  .then(res => getResponseData(res))
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then(res => {
-    updateUserAvatar(res.avatar);
+    return res;
   })
   .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    renderLoading(false);
+    return err;
   });
 };
 
 //запрос к серверу на добавление карточки
-export const postNewCard = () => {
-  renderLoading(true);
+export const postNewCard = (pictureTitle, pictureLink) => {
   return fetch(`${config.baseUrl}/cards`, {
     method: 'POST',
     headers: config.headers,
@@ -130,20 +92,12 @@ export const postNewCard = () => {
       link: pictureLink.value
     })
   })
+  .then(res => getResponseData(res))
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then(res => {
-    addPictureToTop(res.name, res.link, res.owner._id, myId, res._id, res.likes);
+    return res;
   })
   .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    renderLoading(false);
+    return err;
   });
 };
 
@@ -153,53 +107,38 @@ export const deleteCard = (cardId) => {
     method: 'DELETE',
     headers: config.headers
   })
- .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
+  .then()
   .catch((err) => {
-    console.log(err);
+    return err;
   });
 };
 
 //запрос на установку лайка карточки
-export const addLike = (cardId, pictureElement) => {
+export const addLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'PUT',
     headers: config.headers
   })
+  .then(res => getResponseData(res))
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then(res => {
-    showLikes(res.likes, pictureElement);
+    return res;
   })
   .catch((err) => {
-    console.log(err);
+    return err;
   })
 };
 
 //запрос на удаление лайка карточки
-export const removeLike = (cardId, pictureElement) => {
+export const removeLike = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'DELETE',
     headers: config.headers
   })
+  .then(res => getResponseData(res))
   .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
-  .then(res => {
-    showLikes(res.likes, pictureElement);
+    return res;
   })
   .catch((err) => {
-    console.log(err);
+    return err;
   })
 };

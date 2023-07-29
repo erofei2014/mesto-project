@@ -18,7 +18,7 @@ import {
 export {
   addPictureToTop,
   addPictureToBottom,
-  addDeleteButton,
+  activateDeleteButton,
   showLikes,
   content,
   pictureTitle,
@@ -27,78 +27,110 @@ export {
 
 //функция добавления блока в DOM для новой фотографии и подключения к ней необходимых event и fetch
 function createPicture(pictureTitle, pictureLink, cardId, personalId, pictureId, usersList) {
-  const pictureElement = pictureTemplate.querySelector('.photo-grid__photo-card').cloneNode(true);
-  //подключаем фотографию по ссылке и название фотографии из формы
-  pictureElement.querySelector('.photo-grid__photo').setAttribute('src', pictureLink);
-  pictureElement.querySelector('.photo-grid__photo').setAttribute('alt', pictureTitle);
-  pictureElement.querySelector('.photo-grid__caption-text').textContent = pictureTitle;
-  //настройка работы кнопки лайка фотографии
-  pictureElement.querySelector('.photo-grid__like-button').addEventListener('click', (evt) => evt.target.classList.toggle('photo-grid__like-button_active'));
-  //настройка работы корзины для удаления фотографии
-  pictureElement.querySelector('.photo-grid__delete-button').addEventListener('click', (evt) => evt.target.closest('.photo-grid__photo-card').remove());
+//создаём необходимые переменные
+  const pictureCard = pictureTemplate.querySelector('.photo-grid__photo-card').cloneNode(true);
+  const pictureElement = pictureCard.querySelector('.photo-grid__photo');
+  const likeButtonElement = pictureCard.querySelector('.photo-grid__like-button');
+  const likesCounter = pictureCard.querySelector('.photo-grid__likes-count');
+  const deleteButtonElement = pictureCard.querySelector('.photo-grid__delete-button');
+  const captionTextButtonElement = pictureCard.querySelector('.photo-grid__caption-text');
+
+  //задаём параметры переменным для заполнения карточки
+  pictureElement.src = pictureLink;
+  pictureElement.alt = pictureTitle;
+  captionTextButtonElement.textContent = pictureTitle;
+
   //добавляем event по клику на фотокарточку, открывающий модальное окно с фотографией
-  pictureElement.querySelector('.photo-grid__photo').addEventListener('click', function(evt) {
-    popupPictureImage.setAttribute('src', evt.target.getAttribute('src'));
-    popupPictureImage.setAttribute('alt', evt.target.getAttribute('alt'));
-    popupPictureCaption.textContent = evt.target.getAttribute('alt');
+  pictureElement.addEventListener('click', function(evt) {
+    popupPictureImage.src = pictureLink;
+    popupPictureImage.alt = pictureTitle;
+    popupPictureCaption.textContent = pictureTitle;
     openPopup(popupPictureForm);
   });
-  addDeleteButton(cardId, personalId, pictureElement, pictureId);
-  showLikes(usersList, pictureElement);
-  checkMyLike(usersList, personalId, pictureElement);
-  pictureElement.querySelector('.photo-grid__like-button').addEventListener('click', function(evt) {
-    if (evt.target.classList.contains('photo-grid__like-button_active')) {
-      addLike(pictureId, pictureElement);
-    } else {
-      removeLike(pictureId, pictureElement);
-    }
-  });
+
+  //запускаем функции проверки, сколько лайков у карточки, и есть ли свой лайк, подключаем функцию активации лайка и функцию активации кнопки удаления карточки
+  showLikes(usersList, likesCounter);
+  checkMyLike(usersList, personalId, likeButtonElement);
+  activateLikeButton(likesCounter, likeButtonElement, pictureId);
+  activateDeleteButton(cardId, personalId, pictureId, deleteButtonElement);
+
   //возвращаем готовую карточку
-  return pictureElement;
+  return pictureCard;
 }
 
 
 // функция по добавлению карточки в начало Грида (для добавления карточки через форму, чтобы новая карточка была сверху)
 function addPictureToTop(pictureTitle, pictureLink, cardId, personalId, pictureId, usersList) {
   //вызываем функцию создания фотокарточки
-  const pictureElement = createPicture(pictureTitle, pictureLink, cardId, personalId, pictureId, usersList);
+  const pictureCard = createPicture(pictureTitle, pictureLink, cardId, personalId, pictureId, usersList);
   //добавляем фото в начало грид-блока
-  photoGrid.prepend(pictureElement);
+  photoGrid.prepend(pictureCard);
 }
 
 // функция по добавлению карточки в конец Грида (для предзагрузки карточек с сервера, чтобы свежие были вверху)
 function addPictureToBottom(pictureTitle, pictureLink, cardId, personalId, pictureId, usersList) {
   //вызываем функцию создания фотокарточки
-  const pictureElement = createPicture(pictureTitle, pictureLink, cardId, personalId, pictureId, usersList);
+  const pictureCard = createPicture(pictureTitle, pictureLink, cardId, personalId, pictureId, usersList);
   //добавляем фото в конец грид-блока
-  photoGrid.append(pictureElement);
+  photoGrid.append(pictureCard);
 }
 
-//функция добавления кнопки удаления на свою карточку
-function addDeleteButton(cardId, personalId, pictureElement, pictureId) {
+//функция добавления кнопки удаления на свою карточку и работы этой кнопки
+function activateDeleteButton(cardId, personalId, pictureId, deleteButtonElement) {
   if(cardId === personalId) {
-    pictureElement.querySelector('.photo-grid__delete-button').classList.add('photo-grid__delete-button_active');
-    pictureElement.querySelector('.photo-grid__delete-button').addEventListener('click', (evt) => {
-      deleteCard(pictureId);
-    })
+    deleteButtonElement.classList.add('photo-grid__delete-button_active');
+    deleteButtonElement.addEventListener('click', (evt) => {
+      deleteCard(pictureId)
+        .then(() => {
+          deleteButtonElement.closest('.photo-grid__photo-card').remove();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   }
 }
 
 //функция отображения на карточке количества лайков
-function showLikes(usersList, pictureElement) {
+function showLikes(usersList, likesCounter) {
   const likesNumber = usersList.length;
-  pictureElement.querySelector('.photo-grid__likes-count').textContent = likesNumber;
+  likesCounter.textContent = likesNumber;
 }
 
 //функция проверки, есть ли собственный лайк на карточке
-function checkMyLike(usersList, personalId, pictureElement) {
+function checkMyLike(usersList, personalId, likeButtonElement) {
   const usersArray = Array.from(usersList);
   const hasMyLike = usersArray.some((user) => {
     return user._id === personalId;
   });
   if (hasMyLike) {
-    pictureElement.querySelector('.photo-grid__like-button').classList.add('photo-grid__like-button_active');
+    likeButtonElement.classList.add('photo-grid__like-button_active');
   } else {
-    pictureElement.querySelector('.photo-grid__like-button').classList.remove('photo-grid__like-button_active');
+    likeButtonElement.classList.remove('photo-grid__like-button_active');
   }
+}
+
+//функция, подключающая на лайк слушатель, который отправляет запрос на сервер и меняет статус кнопки лайка
+function activateLikeButton(likesCounter, likeButtonElement, pictureId) {
+  likeButtonElement.addEventListener('click', function(evt) {
+    if (likeButtonElement.classList.contains('photo-grid__like-button_active')) {
+      removeLike(pictureId)
+        .then((updatedCard) => {
+          showLikes(updatedCard.likes, likesCounter);
+          likeButtonElement.classList.toggle('photo-grid__like-button_active');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      addLike(pictureId)
+        .then((updatedCard) => {
+          showLikes(updatedCard.likes, likesCounter);
+          likeButtonElement.classList.toggle('photo-grid__like-button_active');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
 }

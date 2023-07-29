@@ -1,23 +1,21 @@
 //блок функций по работе модальных окон
 
 //импортируем необходимые функции и переменные
-import { page, popups } from './index.js';
+import { popups } from './index.js';
 
 //экспортируем необходимые функции и переменные
-export { openPopup, closePopup };
+export { openPopup, closePopup, checkIfClickOnOverlay };
 
 //Функция открытия модального окна
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  page.addEventListener('keydown', checkIfEsc);
-  popup.addEventListener('click', checkIfClickOnOverlay);
+  document.addEventListener('keydown', checkIfEsc);
 }
 
 //Функция закрытия модального окна
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  page.removeEventListener('keydown', checkIfEsc);
-  popup.removeEventListener('click', checkIfClickOnOverlay);
+  document.removeEventListener('keydown', checkIfEsc);
 }
 
 //функция добавления event закрытия модального окна по нажатию на оверлей
@@ -31,7 +29,9 @@ function checkIfClickOnOverlay(evt) {
 function checkIfEsc(evt) {
   if (evt.key === "Escape") {
     popups.forEach(popup => {
-      closePopup(popup);
+      if(popup.classList.contains('popup_opened')) {
+        closePopup(popup);
+      }
     });
   }
 }
