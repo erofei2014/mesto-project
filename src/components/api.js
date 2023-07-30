@@ -22,13 +22,7 @@ export const getInitialUserData = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
   })
-  .then(res => getResponseData(res))
-  .then(res => {
-    return res;
-  })
-  .catch((err) => {
-    return err;
-  });
+  .then(res => getResponseData(res));
 };
 
 //запрос к серверу на получение загруженных на сервер фотокарточек
@@ -36,13 +30,7 @@ export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
   })
-  .then(res => getResponseData(res))
-  .then(res => {
-    return res;
-  })
-  .catch((err) => {
-    return err;
-  });
+  .then(res => getResponseData(res));
 };
 
 //запрос к серверу на обновление данных профиля
@@ -55,13 +43,7 @@ export const patchProfileData = (usernameInput, userOccupationInput) => {
       about: userOccupationInput.value
     })
   })
-  .then(res => getResponseData(res))
-  .then(res => {
-    return res;
-  })
-  .catch((err) => {
-    return err;
-  });
+  .then(res => getResponseData(res));
 };
 
 //запрос к серверу на обновление аватарки
@@ -73,13 +55,7 @@ export const patchAvatar = (userAvatarLinkInput) => {
       avatar: userAvatarLinkInput.value
     })
   })
-  .then(res => getResponseData(res))
-  .then(res => {
-    return res;
-  })
-  .catch((err) => {
-    return err;
-  });
+  .then(res => getResponseData(res));
 };
 
 //запрос к серверу на добавление карточки
@@ -92,13 +68,7 @@ export const postNewCard = (pictureTitle, pictureLink) => {
       link: pictureLink.value
     })
   })
-  .then(res => getResponseData(res))
-  .then(res => {
-    return res;
-  })
-  .catch((err) => {
-    return err;
-  });
+  .then(res => getResponseData(res));
 };
 
 //запрос к серверу на удаление карточки
@@ -107,10 +77,7 @@ export const deleteCard = (cardId) => {
     method: 'DELETE',
     headers: config.headers
   })
-  .then()
-  .catch((err) => {
-    return err;
-  });
+  .then(res => getResponseData(res));
 };
 
 //запрос на установку лайка карточки
@@ -119,13 +86,7 @@ export const addLike = (cardId) => {
     method: 'PUT',
     headers: config.headers
   })
-  .then(res => getResponseData(res))
-  .then(res => {
-    return res;
-  })
-  .catch((err) => {
-    return err;
-  })
+  .then(res => getResponseData(res));
 };
 
 //запрос на удаление лайка карточки
@@ -134,11 +95,5 @@ export const removeLike = (cardId) => {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(res => getResponseData(res))
-  .then(res => {
-    return res;
-  })
-  .catch((err) => {
-    return err;
-  })
+  .then(res => getResponseData(res));
 };

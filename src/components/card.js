@@ -81,7 +81,7 @@ function activateDeleteButton(cardId, personalId, pictureId, deleteButtonElement
     deleteButtonElement.classList.add('photo-grid__delete-button_active');
     deleteButtonElement.addEventListener('click', (evt) => {
       deleteCard(pictureId)
-        .then(() => {
+        .then((res) => {
           deleteButtonElement.closest('.photo-grid__photo-card').remove();
         })
         .catch((err) => {

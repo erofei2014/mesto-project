@@ -122,7 +122,6 @@ function handleProfileFormSubmit (evt) {
     .then((userData) => {
       profileUsername.textContent = userData.name;
       profileOccupation.textContent = userData.about;
-      fillInputField(usernameInput, userOccupationInput, profileUsername, profileOccupation);
       closePopup(popupUserDataForm);
     })
     .catch((err) => {
