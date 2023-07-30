@@ -2,16 +2,18 @@
 
 //импортируем необходимые функции и переменные
 import { openPopup } from "./modal.js";
-import { deleteCard, addLike, removeLike } from "./api.js";
+import { addLike, removeLike } from "./api.js";
 import {
   content,
   pictureTitle,
   pictureLink,
   pictureTemplate,
   popupPictureForm,
+  popupDeletePictureForm,
   popupPictureImage,
   popupPictureCaption,
-  photoGrid
+  photoGrid,
+  cardToDelete,
 } from './index.js';
 
 //экспортируем необходимые функции и переменные
@@ -80,13 +82,9 @@ function activateDeleteButton(cardId, personalId, pictureId, deleteButtonElement
   if(cardId === personalId) {
     deleteButtonElement.classList.add('photo-grid__delete-button_active');
     deleteButtonElement.addEventListener('click', (evt) => {
-      deleteCard(pictureId)
-        .then((res) => {
-          deleteButtonElement.closest('.photo-grid__photo-card').remove();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      openPopup(popupDeletePictureForm);
+      cardToDelete.domElement = deleteButtonElement.closest('.photo-grid__photo-card');
+      cardToDelete.id = pictureId;
     });
   }
 }

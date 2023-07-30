@@ -8,6 +8,7 @@ export {
   pictureLink,
   pictureTemplate,
   popupPictureForm,
+  popupDeletePictureForm,
   popupPictureImage,
   popupPictureCaption,
   photoGrid,
@@ -21,7 +22,9 @@ export {
   profileOccupation,
   popupUserAddPictureForm,
   popupUserAvatarForm,
-  avatarEditButton
+  avatarEditButton,
+  cardToDelete,
+  handleDeletePictureFormSubmit
 };
 
 //импортируем необходимые функции и переменные
@@ -29,7 +32,7 @@ import '../pages/index.css';
 import { enableValidation, reloadValidation } from './validate.js';
 import { openPopup, closePopup, checkIfClickOnOverlay } from './modal.js';
 import { fillInputField, updateUserData, updateUserAvatar, renderLoading } from './utils.js';
-import { getInitialUserData, getInitialCards, patchProfileData, patchAvatar, postNewCard } from './api.js';
+import { getInitialUserData, getInitialCards, patchProfileData, patchAvatar, postNewCard, deleteCard } from './api.js';
 import { addPictureToBottom, addPictureToTop } from './card.js';
 
 // подгружаем необходимые элементы из DOM
@@ -49,6 +52,7 @@ const popups = page.querySelectorAll('.popup');
 const popupUserDataForm = page.querySelector('.popup__user-data');
 const popupUserAddPictureForm = page.querySelector('.popup__add-picture');
 const popupUserAvatarForm = page.querySelector('.popup__user-avatar');
+const popupDeletePictureForm = page.querySelector('.popup__delete-picture');
 const usernameInput = popupUserDataForm.querySelector('.popup__item_input_username');
 const userOccupationInput = popupUserDataForm.querySelector('.popup__item_input_occupation');
 const userAvatarLinkInput = popupUserAvatarForm.querySelector('.popup__item_input_avatar-link');
@@ -70,7 +74,10 @@ const formSelectors = {
   errorClass: 'popup__input-error_active'
 };
 
+//создаем переменную для подгрузки в неё личного ID, для сверки своих лайков и своих карточек
 let myId;
+//создаем переменную для подгрузки в неё ID и DOM-элемента удаляемой карточки, чтобы передать в сабмит формы подтверждения удаления
+let cardToDelete = {};
 
 //добавляем event открытия модального окна к кнопке редактирования данных пользователя и сброс проверки валидации
 profileEditButton.addEventListener('click', function() {
@@ -113,9 +120,12 @@ popupUserAddPictureForm.addEventListener('submit', handlePictureAddingFormSubmit
 //добавляем event по клику на кнопку сохранения формы изменения аватара пользователя, вызывающий соответствующую функцию
 popupUserAvatarForm.addEventListener('submit', handleAvatarFormSubmit);
 
+//установка слушателя на сабмит формы удаления карточки
+popupDeletePictureForm.addEventListener('submit', handleDeletePictureFormSubmit);
+
 
 //Форма отправки на сервер формы по изменению персональных данных пользователя
-function handleProfileFormSubmit (evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true, popupUserDataForm);
   patchProfileData(usernameInput, userOccupationInput)
@@ -133,7 +143,7 @@ function handleProfileFormSubmit (evt) {
 }
 
 //Форма отправки на сервер добавленной фотографии
-function handlePictureAddingFormSubmit (evt) {
+function handlePictureAddingFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true, popupUserAddPictureForm);
   postNewCard(pictureTitle, pictureLink)
@@ -151,7 +161,7 @@ function handlePictureAddingFormSubmit (evt) {
 }
 
 //Форма отправки на сервер ссылки на картинку с новым аватаром
-function handleAvatarFormSubmit (evt) {
+function handleAvatarFormSubmit(evt) {
   evt.preventDefault();
   renderLoading(true, popupUserAvatarForm);
   patchAvatar(userAvatarLinkInput)
@@ -164,6 +174,19 @@ function handleAvatarFormSubmit (evt) {
     })
     .finally(() => {
       renderLoading(false, popupUserAvatarForm);
+    });
+}
+
+//Функция удаления карточки через форму подтверждения
+function handleDeletePictureFormSubmit(evt) {
+  evt.preventDefault();
+  deleteCard(cardToDelete.id)
+    .then((res) => {
+      cardToDelete.domElement.remove();
+      closePopup(popupDeletePictureForm);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 
