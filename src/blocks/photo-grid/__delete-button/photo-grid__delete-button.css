@@ -11,6 +11,7 @@
   background-image: url('../../../images/Delete-icon.svg');
   background-color: transparent;
   border: none;
+  outline: none;
 }
 
 /*при наведении на кнопку изображение становится прозрачнее на 50% с задержком 30мс*/
