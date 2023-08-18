@@ -1,3 +1,18 @@
+import '../pages/index.css';
+import Api from '../components/Api.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import Popup from '../components/Popup.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
+import {
+
+} from '../utils/constants.js';
+
+
+/*
 //базовый файл с кодом. Здесь вызовы функций и установка слушателей событий
 
 //экспортируем необходимые функции
@@ -28,12 +43,12 @@ export {
 };
 
 //импортируем необходимые функции и переменные
-import '../pages/index.css';
-import { enableValidation, reloadValidation } from './validate.js';
-import { openPopup, closePopup, checkIfClickOnOverlay } from './modal.js';
-import { fillInputField, updateUserData, updateUserAvatar, renderLoading } from './utils.js';
-import { getInitialUserData, getInitialCards, patchProfileData, patchAvatar, postNewCard, deleteCard } from './api.js';
-import { addPictureToBottom, addPictureToTop } from './card.js';
+
+import { enableValidation, reloadValidation } from '../components/FormValidator.js';
+import { openPopup, closePopup, checkIfClickOnOverlay } from '../components/Popup.js';
+import { fillInputField, updateUserData, updateUserAvatar, renderLoading } from '../utils/utils.js';
+import { getInitialUserData, getInitialCards, patchProfileData, patchAvatar, postNewCard, deleteCard } from '../components/Api.js';
+import { addPictureToBottom, addPictureToTop } from '../components/Card.js';
 
 // подгружаем необходимые элементы из DOM
 const page = document.querySelector('.page');
@@ -209,3 +224,5 @@ Promise.all([
   .catch((err) => {
     console.log(err);
   })
+
+  */

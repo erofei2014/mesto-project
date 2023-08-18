@@ -1,3 +1,10 @@
+export default class FormValidator {
+  constructor() {
+    
+  }
+}
+
+/*
 //блок функций по валидации форм
 
 //экспортируем необходимые функции и переменные
@@ -86,3 +93,5 @@ const toggleButtonState = (inputList, buttonElement, formSelectors) => {
     buttonElement.classList.remove(formSelectors.inactiveButtonClass);
   }
 };
+
+*/

@@ -1,3 +1,10 @@
+export default class Api {
+  constructor() {
+
+  }
+}
+
+/*
 //скрипты запросов к серверу
 
 //сохраняем в константу адрес и заголовок запроса
@@ -89,3 +96,5 @@ export const removeLike = (cardId) => {
     headers: config.headers,
   }).then((res) => getResponseData(res));
 };
+
+*/

@@ -1,7 +1,14 @@
+export default class Popup {
+  constructor() {
+    
+  }
+}
+
+/*
 //блок функций по работе модальных окон
 
 //импортируем необходимые функции и переменные
-import { popups } from './index.js';
+import { popups } from '../pages/index.js';
 
 //экспортируем необходимые функции и переменные
 export { openPopup, closePopup, checkIfClickOnOverlay };
@@ -35,3 +42,5 @@ function checkIfEsc(evt) {
     });
   }
 }
+
+*/

@@ -1,8 +1,15 @@
+export default class Card {
+  constructor() {
+
+  }
+}
+
+/*
 //блок функций по созданию карточек с фотографиями
 
 //импортируем необходимые функции и переменные
 import { openPopup } from "./modal.js";
-import { addLike, removeLike } from "./api.js";
+import { addLike, removeLike } from "./Api.js";
 import {
   content,
   pictureTitle,
@@ -14,7 +21,7 @@ import {
   popupPictureCaption,
   photoGrid,
   cardToDelete,
-} from './index.js';
+} from '../pages/index.js';
 
 //экспортируем необходимые функции и переменные
 export {
@@ -132,3 +139,5 @@ function activateLikeButton(likesCounter, likeButtonElement, pictureId) {
     }
   });
 }
+
+*/

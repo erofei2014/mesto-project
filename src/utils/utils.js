@@ -1,3 +1,5 @@
+
+/*
 //блок утилитарных функций
 
 //импортируем необходимые функции и переменные
@@ -5,7 +7,7 @@ import {
   profileUsername,
   profileOccupation,
   avatarEditButton
-} from './index.js';
+} from '../pages/index.js';
 
 //экспортируем необходимые функции и переменные
 export { 
@@ -41,3 +43,5 @@ function updateUserData(name, about) {
 function updateUserAvatar(avatar) {
   avatarEditButton.style.background = `center / cover no-repeat url('${avatar}')`; 
 }
+
+*/
