@@ -1,3 +1,4 @@
+//импортируем классы и константы
 import '../pages/index.css';
 import Api from '../components/Api.js';
 import Card from '../components/Card.js';
@@ -8,9 +9,91 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import {
-
+  options,
+  formSelectors,
+  userDataSelectors,
+  addPictureForm,
+  userDataForm,
+  userAvatarForm,
+  photoGridSelector,
+  profileEditButton,
+  addPictureButton,
+  avatarEditButton,
+  usernameInput,
+  userOccupationInput,
+  userAvatarLinkInput,
+  pictureTitleInput,
+  pictureLinkInput,
+  userId
 } from '../utils/constants.js';
 
+
+//создаём экземпляр класса Api
+const api = new Api(options);
+
+//создаём экземпляр класса FormValidator для формы добавления карточки и включаем валидацию
+const cardFormValidator = new FormValidator(formSelectors, addPictureForm);
+cardFormValidator.enableValidation();
+
+//создаём экземпляр класса FormValidator для формы изменения данных пользователя и включаем валидацию
+const userFormValidator = new FormValidator(formSelectors, userDataForm);
+userFormValidator.enableValidation();
+
+//создаём экземпляр класса FormValidator для формы изменения аватара и включаем валидацию
+const avatarFormValidator = new FormValidator(formSelectors, userAvatarForm);
+avatarFormValidator.enableValidation();
+
+//создаём экземпляр класса Section для загрузки на сайт карточек с фотографиями
+const initialCardList = new Section({
+  renderer: item => {
+    const card = new Card();
+    const cardElement = card.generate();
+    initialCardList.addItemToBottom(cardElement);
+  }
+}, photoGridSelector);
+
+//создаём экземпляр класса с данными пользователя
+const userInfo = new UserInfo(userDataSelectors);
+
+//добавляем event открытия модального окна к кнопке редактирования данных пользователя и сброс проверки валидации
+profileEditButton.addEventListener('click', () => {
+//  сюда вставить вызов функции открытия попапа экземпляра класса редактирования профайла
+  fillInputField({ usernameInput, userOccupationInput }, userInfo.getUserInfo);
+//  reloadValidation(popupUserDataForm, formSelectors); //подумать, как обойтись без этой функции
+});
+
+//добавляем event открытия модального окна к кнопке добавления новой фотографии и сброс проверки валидации
+addPictureButton.addEventListener('click', function() {
+  pictureTitleInput.value = "";
+  pictureLinkInput.value = "";
+//  сюда вставить вызов функции открытия попапа экземпляра класса добавления фотографии
+//  reloadValidation(popupUserAddPictureForm, formSelectors); //подумать, как обойтись без этой функции
+});
+
+//добавляем event открытия модального окна к кнопке изменения аватара и сброс проверки валидации
+avatarEditButton.addEventListener('click', function() {
+  userAvatarLinkInput.value = "";
+//  сюда вставить вызов функции открытия попапа экземпляра класса изменения аватара
+//  reloadValidation(popupUserAvatarForm, formSelectors); //подумать, как обойтись без этой функции
+});
+
+//промис, при исполнении которого загружается информация на сайт и отрисовывается DOM при загрузке
+Promise.all([
+  api.getInitialUserData(),
+  api.getInitialCards()
+])
+  .then(([userData, initialCards]) => {
+    userInfo.setUserInfo({
+      userName: userData.name,
+      userOccupation: userData.about
+    });
+    userInfo.setUserAvatar(userData.avatar);
+    initialCardList.renderItems(initialCards);
+    userId = userData._id;
+  })
+  .catch((err) => {
+    console.log(err);
+  })
 
 /*
 //базовый файл с кодом. Здесь вызовы функций и установка слушателей событий
