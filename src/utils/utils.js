@@ -1,3 +1,9 @@
+//блок утилитарных функций
+
+function fillInputField(inputElements, userData) {
+  inputElements.usernameInput.value = userData.userName.textContent;
+  inputElements.userOccupationInput.value = userData.userOccupation.textContent;
+}
 
 /*
 //блок утилитарных функций
@@ -18,10 +24,7 @@ export {
 };
 
 //добавляем в инпуты значения данных пользователя
-function fillInputField(usernameInput, userOccupationInput, profileUsername, profileOccupation) {
-  usernameInput.value = profileUsername.textContent;
-  userOccupationInput.value = profileOccupation.textContent;
-}
+
 
 //Функция по замене текста кнопки, пока идёт процесс сохранения данных на сервере
 function renderLoading(isLoading, formElement) {
