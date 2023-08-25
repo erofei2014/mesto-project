@@ -1,6 +1,41 @@
 export default class Popup {
-  constructor() {
-    
+  constructor(popup) {
+    this._popup = popup;
+    this._closeBtn = this._popup.querySelector('.popup__toggle');
+  }
+
+  open() {
+    this._popup.classList.add('popup_opened');
+    this.setEventListeners();
+  }
+
+  close() {
+    this._popup.classList.remove('popup_opened');
+    this.delEventListeners();
+  }
+
+  _handleEscClose = e => {
+    if(e.key === 'Escape') this.close(document.querySelector('.popup_opened'));
+  }
+
+  _checkIfClickOnOverlay = e => {
+    if(e.target.classList.contains('popup')) this.close(e.target);
+  }
+
+  __handleClose = e => {
+    this.close(e.target.closest('.popup'));
+  }
+
+  setEventListeners() {
+    this._closeBtn.addEventListener('click', this.__handleClose);
+    this._popup.addEventListener('mousedown', this._checkIfClickOnOverlay);
+    document.addEventListener('keydown', this._handleEscClose);
+  }
+  
+  delEventListeners() {
+    this._closeBtn.removeEventListener('click', this.close);
+    this._popup.removeEventListener('mousedown', this._checkIfClickOnOverlay);
+    document.removeEventListener('keydown', this._handleEscClose);
   }
 }
 

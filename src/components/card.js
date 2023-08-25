@@ -1,6 +1,83 @@
-export default class Card {
-  constructor() {
+//блок функций по созданию карточек с фотографиями
 
+//импортируем необходимые функции и переменные
+
+import {storage} from '../utils/constants';
+
+//класс добавления блока в DOM для новой фотографии и подключения к ней необходимых event и fetch
+export default class Card {
+  constructor({item, cardTemplateSelector, handleCardClick, onLikePress, deletePopupOpen}) {
+    this._name = item.name;
+    this._link = item.link;
+    this._likes = item.likes;
+    this._id = item._id;
+    this._owner = item.owner;
+    this._templateSelector = cardTemplateSelector;
+    this._handleCardClick = handleCardClick;
+    this._onLikePress = onLikePress;
+    this._deletePopupOpen = deletePopupOpen;
+  }
+//создаём копию темплейта
+  _getTemplate() {
+    return document.querySelector(this._templateSelector).content;
+  }
+
+  generate() {
+//сохраняем копию темплейта в элемент карточки
+    this._template = this._getTemplate().firstElementChild.cloneNode(true); //тут костыль
+//создаём необходимые переменные
+    this._pictureElement = this._template.querySelector('.photo-grid__photo');
+    this._likeButtonElement = this._template.querySelector('.photo-grid__like-button');
+    this._likesCounter = this._template.querySelector('.photo-grid__likes-count');
+    this._deleteButtonElement = this._template.querySelector('.photo-grid__delete-button');
+    this._captionTextButtonElement = this._template.querySelector('.photo-grid__caption-text');
+    const condition = (this._owner._id == storage.userID);
+//проверяем является ли пользователь владельцем карточки
+    if(condition) this._deleteButtonElement.classList.add('photo-grid__delete-button_active');
+//задаём параметры для отображения элемента карточки
+    this._pictureElement.src = this._link;
+    this._pictureElement.alt = this._name;
+    this._captionTextButtonElement.textContent = this._name;
+//добавляем слушатели событий
+    this._setEventListeners();
+//приводим карточку к базовому состоянию до добавления в разметку
+    this._checkMyLike();
+//возвращаем раметку карточки
+    return this._template;
+  }
+//метод отображения на карточке количества лайков
+  _showLikes() {
+    this._likesCounter.textContent = this._likes.length;
+  }
+//метод проверки, есть ли собственный лайк на карточке
+  _checkMyLike() {
+    const condition = this._likes.find(like => like._id == storage.userID);
+    condition
+      ? this._likeButtonElement.classList.add('photo-grid__like-button_active')
+      : this._likeButtonElement.classList.remove('photo-grid__like-button_active');
+
+    this._showLikes();
+  }
+//метод расстановки слушателей на элементы связанные с карточкой
+  _setEventListeners() {
+    this._likeButtonElement.addEventListener('click', () => {
+      const condition = this._likeButtonElement.classList.contains('photo-grid__like-button_active');
+      this._onLikePress(this._id, condition)
+        .then((updatedCard) => {
+          this._likes = updatedCard.likes;
+          this._checkMyLike();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    })
+    this._pictureElement.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link);
+    })
+    this._deleteButtonElement.addEventListener('click', () => {
+      storage.cardToDelete = {id: this._id, element: this._template};
+      this._deletePopupOpen();
+    })
   }
 }
 

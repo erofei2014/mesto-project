@@ -1,9 +1,8 @@
 //импортируем классы и константы
 import '../pages/index.css';
-import Api from '../components/Api.js';
-import Card from '../components/Card.js';
+import Api from '../components/api.js';
+import Card from '../components/card.js';
 import FormValidator from '../components/FormValidator.js';
-import Popup from '../components/Popup.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import Section from '../components/Section.js';
@@ -12,24 +11,29 @@ import {
   options,
   formSelectors,
   userDataSelectors,
+  popupPicture,
+  popupAddCard,
+  popupEditUserdata,
+  popupEditAvatar,
   addPictureForm,
   userDataForm,
   userAvatarForm,
   photoGridSelector,
+  cardTemplateSelector,
   profileEditButton,
   addPictureButton,
   avatarEditButton,
   usernameInput,
   userOccupationInput,
-  userAvatarLinkInput,
-  pictureTitleInput,
-  pictureLinkInput,
-  userId
+  profileUsername,
+  profileOccupation,
+  popupDeleteCard,
+  storage
 } from '../utils/constants.js';
 
 
 //создаём экземпляр класса Api
-const api = new Api(options);
+export const api = new Api(options);
 
 //создаём экземпляр класса FormValidator для формы добавления карточки и включаем валидацию
 const cardFormValidator = new FormValidator(formSelectors, addPictureForm);
@@ -43,10 +47,107 @@ userFormValidator.enableValidation();
 const avatarFormValidator = new FormValidator(formSelectors, userAvatarForm);
 avatarFormValidator.enableValidation();
 
+const popupAddCardForm = new PopupWithForm({
+  popup: popupAddCard,
+  submitter: data => {
+  popupAddCardForm.renderLoading(true, addPictureForm);
+  api.postNewCard(data)
+    .then((item) => {
+      const card = new Card({
+        item,
+        cardTemplateSelector,
+        handleCardClick: (name, link) => {
+          popupWithImage.open(name, link);
+        },
+        onLikePress: (id, condition) => {
+          return api.changeLike(id, condition);
+        },
+        deletePopupOpen: () => {
+          popupDeleteCardForm.open();
+        }
+      });
+      const cardElement = card.generate();
+      initialCardList.addItemToTop(cardElement);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupAddCardForm.renderLoading(false, addPictureForm);
+      popupAddCardForm.close();
+    });
+  }
+})
+
+const popupEditUserdataForm = new PopupWithForm({
+  popup: popupEditUserdata,
+  submitter: data => {
+    popupEditUserdataForm.renderLoading(true, userDataForm);
+    api.patchProfileData(data)
+      .then((userData) => {
+        profileUsername.textContent = userData.name;
+        profileOccupation.textContent = userData.about;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        popupEditUserdataForm.renderLoading(false, userDataForm);
+        popupEditUserdataForm.close();
+      });
+  }
+})
+
+const popupEditAvatarForm = new PopupWithForm({
+  popup: popupEditAvatar,
+  submitter: data => {
+    popupEditAvatarForm.renderLoading(true, userAvatarForm);
+    api.patchAvatar(data)
+      .then((userData) => {
+        userInfo.setUserAvatar(userData.avatar); 
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        popupEditAvatarForm.renderLoading(false, userAvatarForm);
+        popupEditAvatarForm.close();
+      });
+  }
+})
+
+const popupWithImage = new PopupWithImage(popupPicture);
+
+const popupDeleteCardForm = new PopupWithForm({
+  popup: popupDeleteCard,
+  submitter: () => {
+    return api.deleteCard(storage.cardToDelete.id)
+    .then(() => {
+      storage.cardToDelete.element.remove();
+      popupDeleteCardForm.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+});
+
 //создаём экземпляр класса Section для загрузки на сайт карточек с фотографиями
 const initialCardList = new Section({
   renderer: item => {
-    const card = new Card();
+    const card = new Card({
+      item,
+      cardTemplateSelector,
+      handleCardClick: (name, link) => {
+        popupWithImage.open(name, link);
+      },
+      onLikePress: (id, condition) => {
+        return api.changeLike(id, condition);
+      },
+      deletePopupOpen: () => {
+        popupDeleteCardForm.open();
+      }
+    });
     const cardElement = card.generate();
     initialCardList.addItemToBottom(cardElement);
   }
@@ -58,23 +159,23 @@ const userInfo = new UserInfo(userDataSelectors);
 //добавляем event открытия модального окна к кнопке редактирования данных пользователя и сброс проверки валидации
 profileEditButton.addEventListener('click', () => {
 //  сюда вставить вызов функции открытия попапа экземпляра класса редактирования профайла
-  fillInputField({ usernameInput, userOccupationInput }, userInfo.getUserInfo);
-//  reloadValidation(popupUserDataForm, formSelectors); //подумать, как обойтись без этой функции
+  popupEditUserdataForm.autofill({usernameInput, userOccupationInput}, userInfo.getUserInfo());
+  userFormValidator.reloadValidation(); //подумать, как обойтись без этой функции
+  popupEditUserdataForm.open();
 });
 
 //добавляем event открытия модального окна к кнопке добавления новой фотографии и сброс проверки валидации
 addPictureButton.addEventListener('click', function() {
-  pictureTitleInput.value = "";
-  pictureLinkInput.value = "";
 //  сюда вставить вызов функции открытия попапа экземпляра класса добавления фотографии
-//  reloadValidation(popupUserAddPictureForm, formSelectors); //подумать, как обойтись без этой функции
+  cardFormValidator.reloadValidation(); //подумать, как обойтись без этой функции
+  popupAddCardForm.open();
 });
 
 //добавляем event открытия модального окна к кнопке изменения аватара и сброс проверки валидации
 avatarEditButton.addEventListener('click', function() {
-  userAvatarLinkInput.value = "";
 //  сюда вставить вызов функции открытия попапа экземпляра класса изменения аватара
-//  reloadValidation(popupUserAvatarForm, formSelectors); //подумать, как обойтись без этой функции
+  avatarFormValidator.reloadValidation(); //подумать, как обойтись без этой функции
+  popupEditAvatarForm.open();
 });
 
 //промис, при исполнении которого загружается информация на сайт и отрисовывается DOM при загрузке
@@ -87,9 +188,9 @@ Promise.all([
       userName: userData.name,
       userOccupation: userData.about
     });
+    storage.userID = userData._id;
     userInfo.setUserAvatar(userData.avatar);
     initialCardList.renderItems(initialCards);
-    userId = userData._id;
   })
   .catch((err) => {
     console.log(err);
