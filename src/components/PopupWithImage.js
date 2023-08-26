@@ -1,11 +1,13 @@
 import Popup from './Popup';
 import {popupPictureImage, popupPictureCaption} from '../utils/constants';
 
+//дочерний класс для попапа с картинкой
 export default class PopupWithImage extends Popup {
   constructor(popup) {
     super(popup);
   }
 
+  //метод открытия попапа
   open(name, link) {
     popupPictureImage.src = link;
     popupPictureImage.alt = name;
@@ -14,11 +16,12 @@ export default class PopupWithImage extends Popup {
     super.open();
   }
   
+  //метод закрытия попапа
   close() {
+    super.close();
+
     popupPictureImage.src = '';
     popupPictureImage.alt = '';
     popupPictureCaption.textContent = '';
-    
-    super.close();
   }
 }
