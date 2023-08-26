@@ -42,30 +42,26 @@ export default class Card {
 //добавляем слушатели событий
     this._setEventListeners();
 //приводим карточку к базовому состоянию до добавления в разметку
-    this._checkMyLike();
+    this._showLikes();
 //возвращаем раметку карточки
     return this._template;
   }
 
 //метод отображения на карточке количества лайков
   _showLikes() {
-    this._likesCounter.textContent = this._likes.length;
-  }
-  
-//метод проверки, есть ли собственный лайк на карточке
-  _checkMyLike() {
     const condition = this._likes.some(like => like._id === storage.userID);
     condition
       ? this._likeButtonElement.classList.add('photo-grid__like-button_active')
       : this._likeButtonElement.classList.remove('photo-grid__like-button_active');
 
-    this._showLikes();
+    this._likesCounter.textContent = this._likes.length;
   }
-
-//метод обновления лайков при нажатии лайка
+  
+//метод обновления лайков после нажатия кнопки лайка
   updateLikes(likedCard) {
     this._likes = likedCard.likes;
-    this._checkMyLike();
+    this._likesCounter.textContent = this._likes.length;
+    this._likeButtonElement.classList.toggle('photo-grid__like-button_active');
   }
 
 //метод расстановки слушателей на элементы связанные с карточкой

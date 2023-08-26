@@ -60,8 +60,8 @@ const popupAddCardForm = new PopupWithForm({
         },
         onLikePress: (id, condition) => {
           api.changeLike(id, condition)
-            .then((updatedCard) => {
-              card.updateLikes(updatedCard);
+            .then((likedCard) => {
+              card.updateLikes(likedCard);
             })
             .catch((err) => {
               console.log(err);
@@ -156,8 +156,8 @@ const initialCardList = new Section({
       },
       onLikePress: (id, condition) => {
         api.changeLike(id, condition)
-          .then((updatedCard) => {
-            card.updateLikes(updatedCard);
+          .then((likedCard) => {
+            card.updateLikes(likedCard);
           })
           .catch((err) => {
             console.log(err);
